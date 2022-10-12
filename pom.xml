@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>io.github.abnobrega</groupId>
+    <artifactId>vendas-new</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <!-- define que o produto final do build (deploy) será um arquivo war     <packaging>war</packaging> -->
+    <packaging>${project.packaging}</packaging>
+
+    <!-- ******* PARENT do SPRING BOOT ******* -->
+    <parent>
+        <!-- Starter que inicia o framework Spring Boot -->
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.7.1</version>
+    </parent>
+
+    <profiles>
+        <profile>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <id>desenvolvimento</id>
+            <properties>
+                <project.packaging>jar</project.packaging>
+                <tomcat.scope>compile</tomcat.scope>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>producao</id>
+            <properties>
+                <project.packaging>war</project.packaging>
+                <tomcat.scope>provided</tomcat.scope>
+            </properties>
+        </profile>
+    </profiles>
+
+    <!-- ******* DEPENDÊNCIAS ******* -->
+    <dependencies>
+        <!-- Starter que busca e incia as funcionalidades básicas do framework Spring Boot-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <!-- Starter que busca e inicia as funcionalidades web: Webservices, REST Api, Appl Web, etc -->
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <!-- Starter que possibilita utilizar um servidor tomcat externo provido; e não o embarcado -->
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+           <!-- <scope>provided</scope> -->
+            <scope>${tomcat.scope}</scope>
+        </dependency>
+
+
+        <dependency>
+            <!-- Starter com toda a estrutura para trabalharmos com Base de Dados -->
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+
+        <dependency>
+            <!-- Starter com toda a estrutura para trabalharmos com Security -->
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+        <dependency>
+            <!-- Driver de conexão com o Banco de Dados de memória-->
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+        </dependency>
+
+        <dependency>
+            <!-- Dependência para a conexão com o Banco de Dados MySQL-->
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt -->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.9.1</version>
+        </dependency>
+
+        <!-- Dependência para fazer a documentação da API por meio da ferramenta SWAGGER -->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>2.9.2</version>
+        </dependency>
+
+        <!-- Dependência que traz uma UI para visualizamos a documentação da API no SWAGGER -->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>2.9.2</version>
+        </dependency>
+
+    </dependencies>
+
+    <!-- ******* PLUGIN DO MAVEM PARA O SRPRINGBOOT *******
+        Responsável por fazer o empacotamento da aplicação Spring Boot,
+        que gera um arquivo executável  .jar (java archive).
+        OBS: Onde executarmos o arquivo .jar, ele vai subir a nossa aplicação.
+    -->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.1.0</version>
+            </plugin>
+        </plugins>
+    </build>
+
+    <properties>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+    </properties>
+
+</project>
